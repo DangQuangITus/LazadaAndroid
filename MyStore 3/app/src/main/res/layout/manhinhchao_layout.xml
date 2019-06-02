@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/nature"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llMainScreen"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#80000000"
+        android:orientation="vertical"
+        android:paddingLeft="100dp"
+        android:paddingTop="50dp"
+        android:paddingRight="100dp">
+
+        <ImageView
+            android:layout_width="86dp"
+            android:layout_height="69dp"
+            android:layout_gravity="center"
+            android:maxWidth="40dp"
+            android:maxHeight="40dp"
+            android:src="@drawable/delivery" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thế giới mua sắm trong tằm tay bạn"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="83dp"
+            android:layout_height="81dp"
+            android:layout_gravity="center"
+            android:maxWidth="40dp"
+            android:maxHeight="40dp"
+            android:paddingTop="20dp"
+            android:src="@drawable/bond" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Giao hàng tận nơi + thanh toán dễ dàng"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="85dp"
+            android:layout_gravity="center"
+            android:maxWidth="60dp"
+            android:maxHeight="60dp"
+            android:paddingTop="20dp"
+            android:src="@drawable/shop" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="100% Bảo vệ người tiêu dùng"
+            android:textAlignment="center"
+            android:textColor="#FFF"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="142dp"
+        android:layout_gravity="bottom|center"
+        android:paddingBottom="10dp"
+        android:src="@drawable/logoapp" />
+
+</FrameLayout>
