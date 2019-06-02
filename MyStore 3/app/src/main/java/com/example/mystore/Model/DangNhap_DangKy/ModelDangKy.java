@@ -2,17 +2,13 @@ package com.example.mystore.Model.DangNhap_DangKy;
 
 import android.util.Log;
 
-import com.example.mystore.ConnectInternet.DownloadJSON;
+import com.example.mystore.ConnectInternet.ApiUtils;
 import com.example.mystore.Model.ObjectClass.NhanVien;
-import com.example.mystore.View.TrangChu.TrangChuActivity;
+import com.example.mystore.Model.ResultModel;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.concurrent.ExecutionException;
+import retrofit2.Response;
 
 /**
  * Created by Lenovo S410p on 7/8/2016.
@@ -20,55 +16,24 @@ import java.util.concurrent.ExecutionException;
 public class ModelDangKy {
 
     public Boolean DangKyThanhVien(NhanVien nhanVien){
-        String duongdan = TrangChuActivity.SERVER_NAME;
-        boolean kiemtra = false;
-        List<HashMap<String,String>> attrs = new ArrayList<>();
+        boolean kiemtra = true;
 
-        HashMap<String,String> hsHam = new HashMap<>();
-        hsHam.put("ham","DangKyThanhVien");
+        Log.d("DANG_KY", "START");
+        new Thread(() -> {
+            try {
+//                DangKyReq dangKyReq = new DangKyReq(nhanVien.getMaNV(),nhanVien.getTenNV(),nhanVien.getEmailDocQuyen(),nhanVien.getMatKhau(),nhanVien.getDiaChi(),nhanVien.getNgaySinh(),nhanVien.getSoDT(),nhanVien.getGioiTinh(),nhanVien.getMaLoaiNV());
+                Response<ResultModel> response = ApiUtils.getServiceGenerator()
+                        .dangKyThanhVien(nhanVien.getMaNV(),nhanVien.getTenNV(),nhanVien.getEmailDocQuyen(),nhanVien.getMatKhau(),nhanVien.getDiaChi(),nhanVien.getNgaySinh(),nhanVien.getSoDT(),nhanVien.getGioiTinh(),nhanVien.getMaLoaiNV())
+                        .execute();
 
-        HashMap<String,String> hsTenNV = new HashMap<>();
-        hsTenNV.put("tennv",nhanVien.getTenNV());
+                ResultModel resultModel = response.body();
 
-        HashMap<String,String> hsTenDN = new HashMap<>();
-        hsTenDN.put("tendangnhap",nhanVien.getTenDN());
+                System.out.println(resultModel.getResult());
 
-        HashMap<String,String> hsMatKhau = new HashMap<>();
-        hsMatKhau.put("matkhau",nhanVien.getMatKhau());
-
-        HashMap<String,String> hsMaLoaiNV = new HashMap<>();
-        hsMaLoaiNV.put("maloainv",String.valueOf(nhanVien.getMaLoaiNV()));
-
-        HashMap<String,String> hsEmailDocQuyen = new HashMap<>();
-        hsEmailDocQuyen.put("emaildocquyen",nhanVien.getEmailDocQuyen());
-
-        attrs.add(hsHam);
-        attrs.add(hsTenNV);
-        attrs.add(hsTenDN);
-        attrs.add(hsMatKhau);
-        attrs.add(hsMaLoaiNV);
-        attrs.add(hsEmailDocQuyen);
-
-        DownloadJSON downloadJSON = new DownloadJSON(duongdan,attrs);
-        downloadJSON.execute();
-
-        try {
-            String dulieuJSON = downloadJSON.get();
-            JSONObject jsonObject = new JSONObject(dulieuJSON);
-            String ketqua = jsonObject.getString("ketqua");
-            Log.d("kiemtra",ketqua);
-            if(ketqua.equals("true")){
-                kiemtra = true;
-            }else{
-                kiemtra = false;
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        }).start();
 
         return kiemtra;
     }

@@ -7,6 +7,7 @@ import com.example.mystore.Model.ObjectClass.Products;
 import com.example.mystore.Model.ObjectClass.Res.SanPhamResponse;
 import com.example.mystore.Model.ObjectClass.SanPham;
 import com.example.mystore.Model.ObjectClass.ThuongHieu;
+import com.example.mystore.Model.ResultModel;
 import com.example.mystore.User;
 
 import java.util.List;
@@ -71,5 +72,21 @@ public interface ServiceGenerator {
 
     @POST("/thanhtoan")
     Call<String> thanhToan(@Query("hoadon") String hoadon);
+
+    @Multipart
+    @POST("/DangKyThanhVien")
+    Call<ResultModel> dangKyThanhVien(@Part("manv")int maNv,
+                                      @Part("tennv")String tenNv,
+                                      @Part("username") String username,
+                                      @Part("password")String password,
+                                      @Part("diachi")String diaChi,
+                                      @Part("ngaysinh")String ngaySinh,
+                                      @Part("sodt")String soDt,
+                                      @Part("gioitinh")int gioiTinh,
+                                      @Part("maloainv")int maLoaiNv);
+    @Multipart
+    @POST("/DangNhap")
+    Call<ResultModel> dangNhap(@Part("username")String username,
+                               @Part("password")String password);
 
 }

@@ -24,9 +24,8 @@ public class FragmentSliderChiTietSanPham extends Fragment {
         String linkhinh = bundle.getString("linkhinh");
         System.out.println("linkhinh: " + linkhinh);
         ImageView imageView = (ImageView) view.findViewById(R.id.imHinhSlider);
-//        Picasso.with(getContext()).load(linkhinh).resize(180,90).centerInside().into(imageView);
-
         Picasso.with(getContext()).load(linkhinh).into(imageView);
+
 
         return view;
     }

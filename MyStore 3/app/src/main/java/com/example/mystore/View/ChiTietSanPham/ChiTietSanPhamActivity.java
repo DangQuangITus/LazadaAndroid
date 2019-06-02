@@ -1,6 +1,8 @@
 package com.example.mystore.View.ChiTietSanPham;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
@@ -11,6 +13,8 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.Html;
 import android.util.Log;
@@ -23,6 +27,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mystore.Adapter.AdapterDanhGia;
 import com.example.mystore.Adapter.AdapterViewPagerSlider;
 import com.example.mystore.Model.ObjectClass.DanhGia;
 import com.example.mystore.Model.ObjectClass.SanPham;
@@ -30,9 +35,11 @@ import com.example.mystore.Model.ObjectClass.ThongSoKyThuat;
 import com.example.mystore.Presenter.ChiTietSanPham.FragmentSliderChiTietSanPham;
 import com.example.mystore.Presenter.ChiTietSanPham.PresenterLogicChiTietSanPham;
 import com.example.mystore.R;
+import com.example.mystore.View.DanhGia.DanhSachDanhGiaActivity;
 import com.example.mystore.View.GioHang.GioHangActivity;
 import com.example.mystore.View.TrangChu.TrangChuActivity;
 
+import java.io.ByteArrayOutputStream;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.ArrayList;
@@ -45,11 +52,14 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
     TextView[] txtDots;
     LinearLayout layoutDots;
     List<Fragment> fragmentList;
-    TextView txtTenSanPham, txtGiaTien, txtTenCHDongGoi, txtGioHang, txtThongTinChiTiet;
+    TextView txtTenSanPham, txtGiaTien, txtTenCHDongGoi, txtXemTatCaNhanXet, txtGioHang, txtThongTinChiTiet;
     ImageView imXemThemChiTiet, imThemGioHang;
     boolean kiemtraxochitiet = false;
     LinearLayout lnThongSoKyThuat;
+    RecyclerView recyclerDanhGiaChiTiet;
     SanPham sanPhamGioHang;
+
+    int masp_glo;
 
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
@@ -61,6 +71,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         layoutDots = (LinearLayout) findViewById(R.id.layoutDots);
         txtTenSanPham = (TextView) findViewById(R.id.txtTenSanPham);
         txtGiaTien = (TextView) findViewById(R.id.txtGiaTien);
+        recyclerDanhGiaChiTiet = (RecyclerView) findViewById(R.id.recyclerDanhGiaChiTiet);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         txtTenCHDongGoi = (TextView) findViewById(R.id.txtTenCHDongGoi);
         txtThongTinChiTiet = (TextView) findViewById(R.id.txtThongTinChiTiet);
@@ -70,46 +81,39 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         setSupportActionBar(toolbar);
 
         int masp = getIntent().getIntExtra("masp", 0);
+        masp_glo = getIntent().getIntExtra("masp", 0);
         System.out.println("ma san pham lay chi tiet la: " + masp);
         presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham(this);
         presenterLogicChiTietSanPham.LayChiTietSanPham(masp);
-
+        presenterLogicChiTietSanPham.LayDanhSachDanhGiaCuaSanPham(masp, 0);
         imThemGioHang.setOnClickListener(this);
 
     }
 
-    public void setSupportActionBar(Toolbar toolbar) {
-    }
 
     @Override
     public void HienChiTietSanPham(SanPham sanPham) {
 
         sanPhamGioHang = sanPham;
         sanPhamGioHang.setSOLUONGTONKHO(sanPham.getSOLUONG());
-
         System.out.println("chi tiet san pham: " + sanPham.toString());
         txtTenSanPham.setText(sanPham.getTENSP());
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGIA()).toString();
         txtGiaTien.setText(gia + " VNĐ");
-
         txtTenCHDongGoi.setText(sanPham.getTENNHANVIEN());
         System.out.println("thong so ky thuat: " + sanPham.getTHONGSOKYTHUAT());
-
         txtThongTinChiTiet.setText(sanPham.getTHONGTIN().substring(0, 100));
-
         if (sanPham.getTHONGTIN().length() < 100) {
             imXemThemChiTiet.setVisibility(View.GONE);
         } else {
             imXemThemChiTiet.setVisibility(View.VISIBLE);
-
             imXemThemChiTiet.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     kiemtraxochitiet = !kiemtraxochitiet;
                     if (kiemtraxochitiet) {
                         txtThongTinChiTiet.setText(sanPham.getTHONGTIN());
-
                         imXemThemChiTiet.setImageDrawable(getHinhChiTiet(R.drawable.ic_keyboard_arrow_down_black_24dp));
                         lnThongSoKyThuat.setVisibility(View.VISIBLE);
                         HienThiThongSoKyThuat(sanPham);
@@ -141,14 +145,11 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
             TextView txtTenThongSo = new TextView(this);
             txtTenThongSo.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
             txtTenThongSo.setText(chiTietSanPhams.get(i).getTENCHITIET());
-
             TextView txtGiatriThongSo = new TextView(this);
             txtTenThongSo.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, 1.0f));
             txtGiatriThongSo.setText(chiTietSanPhams.get(i).getGIATRI());
-
             lnChiTiet.addView(txtTenThongSo);
             lnChiTiet.addView(txtGiatriThongSo);
-
             lnThongSoKyThuat.addView(lnChiTiet);
         }
     }
@@ -159,9 +160,7 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         MenuItem iGioHang = menu.findItem(R.id.itGioHang);
         View giaoDienCustomGioHang = MenuItemCompat.getActionView(iGioHang);
         txtGioHang = (TextView) giaoDienCustomGioHang.findViewById(R.id.txtSoLuongSanPhamGioHang);
-
         txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
-
         giaoDienCustomGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -187,7 +186,6 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
         AdapterViewPagerSlider adapterViewPagerSlider = new AdapterViewPagerSlider(getSupportFragmentManager(), fragmentList);
         viewPager.setAdapter(adapterViewPagerSlider);
         adapterViewPagerSlider.notifyDataSetChanged();
-
         ThemDotSlider(0);
         viewPager.addOnPageChangeListener(this);
     }
@@ -212,7 +210,12 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 
     @Override
     public void HienThiDanhGia(List<DanhGia> danhGias) {
+        AdapterDanhGia adapterDanhGia = new AdapterDanhGia(this, danhGias, 3);
+        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
+        recyclerDanhGiaChiTiet.setLayoutManager(layoutManager);
+        recyclerDanhGiaChiTiet.setAdapter(adapterDanhGia);
 
+        adapterDanhGia.notifyDataSetChanged();
     }
 
     private void ThemDotSlider(int vitrihientai) {
@@ -265,24 +268,27 @@ public class ChiTietSanPhamActivity extends AppCompatActivity implements ViewChi
 //                ;
 //                break;
 //
-//            case R.id.txtXemTatCaNhanXet:
-//                Intent iDanhSachDanhGia = new Intent(ChiTietSanPhamActivity.this, DanhSachDanhGiaActivity.class);
-//                iDanhSachDanhGia.putExtra("masp", masp);
-//                startActivity(iDanhSachDanhGia);
-//                break;
+            case R.id.txtXemTatCaNhanXet:
+                Intent iDanhSachDanhGia = new Intent(ChiTietSanPhamActivity.this, DanhSachDanhGiaActivity.class);
+                iDanhSachDanhGia.putExtra("masp", masp_glo);
+                this.startActivity(iDanhSachDanhGia);
+                break;
 
             case R.id.imThemGioHang:
                 Fragment fragment = fragmentList.get(0);
                 View view = fragment.getView();
-//                ImageView imageView = (ImageView) view.findViewById(R.id.imHinhSlider);
-//                Bitmap bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                ImageView imageView = (ImageView) view.findViewById(R.id.imHinhSlider);
+                Bitmap bitmap = null;
+                if (imageView.getDrawable() != null) {
+                    bitmap = ((BitmapDrawable) imageView.getDrawable()).getBitmap();
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                    byte[] hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
+                    sanPhamGioHang.setHinhgiohang(hinhsanphamgiohang);
 
-//                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-//                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-//                byte[] hinhsanphamgiohang = byteArrayOutputStream.toByteArray();
-//
-//                sanPhamGioHang.setHinhgiohang("123");
-                sanPhamGioHang.setSOLUONGTONKHO(1);
+                } else sanPhamGioHang.setHinhgiohang(null);
+
+                sanPhamGioHang.setSOLUONGTONKHO(10);
 
                 presenterLogicChiTietSanPham.ThemGioHang(sanPhamGioHang, this);
                 break;

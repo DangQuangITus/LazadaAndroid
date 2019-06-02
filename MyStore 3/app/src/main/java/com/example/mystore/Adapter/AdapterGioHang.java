@@ -26,105 +26,115 @@ public class AdapterGioHang extends RecyclerView.Adapter<AdapterGioHang.ViewHold
 
     Context context = null;
     List<SanPham> sanPhamList = new ArrayList<>();
+    ModelGioHang modelGioHang;
 
     public AdapterGioHang(Context context, List<SanPham> sanPhamList) {
         this.context = context;
         this.sanPhamList = sanPhamList;
+        modelGioHang = new ModelGioHang();
+        modelGioHang.MoKetNoiSQL(context);
     }
 
     public class ViewHolderGiohang extends RecyclerView.ViewHolder {
 
         TextView txtTenTieuDeGioHang, txtGiaTienGioHang, txtSoLuongSanPham;
-        ImageView imHinhGioHang, imXoaSanPham;
+        ImageView imHinhGioHang, imXoaSanPhamGioHang;
         ImageButton imTangSoLuongSPGioHang, imGiamSoLuongSPGioHang;
 
 
         public ViewHolderGiohang(View itemView) {
             super(itemView);
+
             txtTenTieuDeGioHang = (TextView) itemView.findViewById(R.id.txtTieuDeGioHang);
             txtGiaTienGioHang = (TextView) itemView.findViewById(R.id.txtGiaGioHang);
+            txtSoLuongSanPham = (TextView) itemView.findViewById(R.id.txtSoLuongSanPham);
             imHinhGioHang = (ImageView) itemView.findViewById(R.id.imHinhGioHang);
-            imXoaSanPham = (ImageView) itemView.findViewById(R.id.imXoaSanPham);
-            txtSoLuongSanPham = (TextView) itemView.findViewById(R.id.txtSoLuongSanPhamGioHang);
-//            imGiamSoLuongSPGioHang = (ImageButton) itemView.findViewById(R.id.im);
-//            imTangSoLuongSPGioHang = (ImageButton) itemView.findViewById(R.id.imTangSoLuongSPTrongGioHang);
+            imXoaSanPhamGioHang = (ImageView) itemView.findViewById(R.id.imXoaSanPhamGioHang);
+            imGiamSoLuongSPGioHang = (ImageButton) itemView.findViewById(R.id.imGiamSoLuongSPTrongGioHang);
+            imTangSoLuongSPGioHang = (ImageButton) itemView.findViewById(R.id.imTangSoLuongSPTrongGioHang);
+
 
         }
     }
 
     @Override
-    public ViewHolderGiohang onCreateViewHolder(ViewGroup viewGroup, int i) {
-        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = layoutInflater.inflate(R.layout.custom_layout_giohang, viewGroup, false);
+    public ViewHolderGiohang onCreateViewHolder(ViewGroup parent, int viewType) {
 
-        ViewHolderGiohang viewHolderGiohang = new ViewHolderGiohang(view);
-        return viewHolderGiohang;
+        LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = layoutInflater.inflate(R.layout.custom_layout_giohang, parent, false);
+
+        ViewHolderGiohang viewHolderGioHang = new ViewHolderGiohang(view);
+
+        return viewHolderGioHang;
     }
 
     @Override
-    public void onBindViewHolder(ViewHolderGiohang viewHolderGiohang, int i) {
-        SanPham sanPham = sanPhamList.get(i);
+    public void onBindViewHolder(final ViewHolderGiohang holder, final int position) {
+        final SanPham sanPham = sanPhamList.get(position);
 
-        viewHolderGiohang.txtTenTieuDeGioHang.setText(sanPham.getTENSP());
+        holder.txtTenTieuDeGioHang.setText(sanPham.getTENSP());
 
         NumberFormat numberFormat = new DecimalFormat("###,###");
         String gia = numberFormat.format(sanPham.getGIA()).toString();
-        viewHolderGiohang.txtGiaTienGioHang.setText(gia + " VNĐ ");
+        holder.txtGiaTienGioHang.setText(gia + " VNĐ ");
 
-//        byte[] bytes = sanPham.getHinhgiohang();
-//        Bitmap bitmapGioHang = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-//        viewHolderGiohang.imHinhGioHang.setImageBitmap(bitmapGioHang);
+        byte[] hinhsanpham = sanPham.getHinhgiohang();
+        if (hinhsanpham != null) {
+            Bitmap bitmapHinhGioHang = BitmapFactory.decodeByteArray(hinhsanpham, 0, hinhsanpham.length);
+            holder.imHinhGioHang.setImageBitmap(bitmapHinhGioHang);
+        } else holder.imHinhGioHang.setImageBitmap(null);
 
+        holder.imXoaSanPhamGioHang.setTag(sanPham.getMASP());
 
-        viewHolderGiohang.imXoaSanPham.setTag(sanPham.getMASP());
-        viewHolderGiohang.imXoaSanPham.setOnClickListener(new View.OnClickListener() {
+        holder.imXoaSanPhamGioHang.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, "Xoa san pham", Toast.LENGTH_SHORT).show();
                 ModelGioHang modelGioHang = new ModelGioHang();
                 modelGioHang.MoKetNoiSQL(context);
                 modelGioHang.XoaSanPhamTrongGioHang((int) v.getTag());
-                sanPhamList.remove(i);
+                sanPhamList.remove(position);
                 notifyDataSetChanged();
             }
         });
 
-//        viewHolderGiohang.txtSoLuongSanPham.setText(String.valueOf(sanPham.getSOLUONG()));
+        holder.txtSoLuongSanPham.setText(String.valueOf(sanPham.getSOLUONG()));
 
-//        holder.imTangSoLuongSPGioHang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int soluong = Integer.parseInt(holder.txtSoLuongSanPham.getText().toString());
-//                int soluongtonkho = sanPham.getSOLUONGTONKHO();
-//
-//                if (soluong < soluongtonkho) {
-//                    soluong++;
-//                } else {
-//                    Toast.makeText(context, "Số lượng sản phẩm bạn mua quá số lượng có trong kho của cửa hàng !", Toast.LENGTH_SHORT).show();
-//                }
-//
-//                modelGioHang.CapNhatSoLuongSanPhamGioHang(sanPham.getMASP(), soluong);
-//                holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
-//            }
-//        });
-//
-//        holder.imGiamSoLuongSPGioHang.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int soluong = Integer.parseInt(holder.txtSoLuongSanPham.getText().toString());
-//
-//                if (soluong > 1) {
-//                    soluong--;
-//                }
-//                modelGioHang.CapNhatSoLuongSanPhamGioHang(sanPham.getMASP(), soluong);
-//                holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
-//            }
-//        });
+        holder.imTangSoLuongSPGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int soluong = Integer.parseInt(holder.txtSoLuongSanPham.getText().toString());
+                int soluongtonkho = sanPham.getSOLUONGTONKHO();
+
+                if (soluong < soluongtonkho) {
+                    soluong++;
+                } else {
+                    Toast.makeText(context, "Số lượng sản phẩm bạn mua quá số lượng có trong kho của cửa hàng !", Toast.LENGTH_SHORT).show();
+                }
+
+                modelGioHang.CapNhatSoLuongSanPhamGioHang(sanPham.getMASP(), soluong);
+                holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
+            }
+        });
+
+        holder.imGiamSoLuongSPGioHang.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int soluong = Integer.parseInt(holder.txtSoLuongSanPham.getText().toString());
+
+                if (soluong > 1) {
+                    soluong--;
+                }
+                modelGioHang.CapNhatSoLuongSanPhamGioHang(sanPham.getMASP(), soluong);
+                holder.txtSoLuongSanPham.setText(String.valueOf(soluong));
+            }
+        });
+
     }
 
     @Override
     public int getItemCount() {
         return sanPhamList.size();
     }
+
 
 }
