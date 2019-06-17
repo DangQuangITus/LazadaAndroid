@@ -15,18 +15,20 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mystore.CustomView.PasswordEditText;
 import com.example.mystore.Model.ObjectClass.NhanVien;
 import com.example.mystore.Presenter.DangKy.PresenterLogicDangKy;
 import com.example.mystore.R;
 import com.example.mystore.View.DangNhapDangKy.ViewDangKy;
 
 /**
- * Created by Lenovo S410p on 6/29/2016.
+ *
  */
-public class FragmentDangKy extends Fragment implements ViewDangKy,View.OnClickListener,View.OnFocusChangeListener {
+public class FragmentDangKy extends Fragment implements ViewDangKy, View.OnClickListener, View.OnFocusChangeListener {
+
     PresenterLogicDangKy presenterLogicDangKy;
     Button btnDangKy;
-    EditText edHoTen,edMatKhau,edNhapLaiMatKhau,edDiaChiEmail;
+    EditText edHoTen, edMatKhau, edNhapLaiMatKhau, edDiaChiEmail;
     SwitchCompat sEmailDocQuyen;
     TextInputLayout input_edHoTen;
     TextInputLayout input_edMatKhau;
@@ -37,18 +39,18 @@ public class FragmentDangKy extends Fragment implements ViewDangKy,View.OnClickL
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_fragment_dangky,container,false);
+        View view = inflater.inflate(R.layout.layout_fragment_dangky, container, false);
 
         btnDangKy = (Button) view.findViewById(R.id.btnDangKy);
         edHoTen = (EditText) view.findViewById(R.id.edHoTenDK);
-        edMatKhau = (EditText) view.findViewById(R.id.edMatKhauDK);
-        edNhapLaiMatKhau = (EditText) view.findViewById(R.id.edNhapLaiMatKhauDK);
+        edMatKhau = view.findViewById(R.id.edMatKhauDK);
+        edNhapLaiMatKhau = view.findViewById(R.id.edNhapLaiMatKhauDK);
         edDiaChiEmail = (EditText) view.findViewById(R.id.edDiaChiEmailDK);
         sEmailDocQuyen = (SwitchCompat) view.findViewById(R.id.sEmailDocQuyen);
         input_edHoTen = (TextInputLayout) view.findViewById(R.id.input_edHoTenDK);
         input_edMatKhau = (TextInputLayout) view.findViewById(R.id.input_edMatKhauDK);
         input_edNhapLaiMatKhau = (TextInputLayout) view.findViewById(R.id.input_edNhapLaiMatKhauDK);
-        input_edDiaChiEmail = (TextInputLayout)view.findViewById(R.id.input_edDiaChiEmailDK);
+        input_edDiaChiEmail = (TextInputLayout) view.findViewById(R.id.input_edDiaChiEmailDK);
 
         presenterLogicDangKy = new PresenterLogicDangKy(this);
 
@@ -62,27 +64,30 @@ public class FragmentDangKy extends Fragment implements ViewDangKy,View.OnClickL
 
     @Override
     public void DangKyThangCong() {
-        Toast.makeText(getActivity(),"Đăng ký thành công !",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Đăng ký thành công !", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void DangKyThatBai() {
-        Toast.makeText(getActivity(),"Đăng ký thất bại !",Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "Đăng ký thất bại !", Toast.LENGTH_SHORT).show();
     }
 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
 
             case R.id.btnDangKy:
                 btnDangKy();
-                ;break;
+                break;
+            default:
+                break;
         }
     }
 
     String emaildocquyen = "";
-    private void btnDangKy(){
+
+    private void btnDangKy() {
         String hoten = edHoTen.getText().toString();
         String email = edDiaChiEmail.getText().toString();
         String matkhau = edMatKhau.getText().toString();
@@ -95,7 +100,7 @@ public class FragmentDangKy extends Fragment implements ViewDangKy,View.OnClickL
             }
         });
 
-        if(kiemtrathongtin) {
+        if (kiemtrathongtin) {
             NhanVien nhanVien = new NhanVien();
             nhanVien.setTenNV(hoten);
             nhanVien.setTenDN(email);
@@ -104,8 +109,8 @@ public class FragmentDangKy extends Fragment implements ViewDangKy,View.OnClickL
             nhanVien.setMaLoaiNV(2);
 
             presenterLogicDangKy.ThucHienDangKy(nhanVien);
-        }else{
-            Log.d("kiemtra","Dang ky that bai ");
+        } else {
+            Log.d("kiemtra", "Dang ky that bai ");
         }
 
     }
@@ -113,66 +118,70 @@ public class FragmentDangKy extends Fragment implements ViewDangKy,View.OnClickL
     @Override
     public void onFocusChange(View view, boolean b) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
             case R.id.edHoTenDK:
-                if(!b){
-                    String chuoi = ((EditText)view).getText().toString();
-                    if(chuoi.trim().equals("") || chuoi.equals(null)){
+                if (!b) {
+                    String chuoi = ((EditText) view).getText().toString();
+                    if (chuoi.trim().equals("") || chuoi.equals(null)) {
                         input_edHoTen.setErrorEnabled(true);
                         input_edHoTen.setError("Bạn chưa nhận mục này !");
                         kiemtrathongtin = false;
-                    }else{
+                    } else {
                         input_edHoTen.setErrorEnabled(false);
                         input_edHoTen.setError("");
                         kiemtrathongtin = true;
                     }
                 }
-                ;break;
+                ;
+                break;
 
             case R.id.edDiaChiEmailDK:
-                if(!b){
+                if (!b) {
 
-                    String chuoi = ((EditText)view).getText().toString();
+                    String chuoi = ((EditText) view).getText().toString();
 
-                    if(chuoi.trim().equals("") || chuoi.equals(null)){
+                    if (chuoi.trim().equals("") || chuoi.equals(null)) {
                         input_edDiaChiEmail.setErrorEnabled(true);
                         input_edDiaChiEmail.setError("Bạn chưa nhận mục này !");
                         kiemtrathongtin = false;
-                    }else{
+                    } else {
 
                         Boolean kiemtraemail = Patterns.EMAIL_ADDRESS.matcher(chuoi).matches();
-                        if(!kiemtraemail){
+                        if (!kiemtraemail) {
                             input_edDiaChiEmail.setErrorEnabled(true);
                             input_edDiaChiEmail.setError("Đây không phải là địa chỉ Email !");
                             kiemtrathongtin = false;
-                        }else{
+                        } else {
                             input_edDiaChiEmail.setErrorEnabled(false);
                             input_edDiaChiEmail.setError("");
                             kiemtrathongtin = true;
                         }
                     }
                 }
-                ;break;
+                ;
+                break;
 
             case R.id.edMatKhauDK:
-                ;break;
+                ;
+                break;
 
             case R.id.edNhapLaiMatKhauDK:
-                if(!b){
-                    String chuoi = ((EditText)view).getText().toString();
+                if (!b) {
+                    String chuoi = ((EditText) view).getText().toString();
                     String matkhau = edMatKhau.getText().toString();
-                    if(!chuoi.equals(matkhau)){
+                    if (!chuoi.equals(matkhau)) {
                         input_edNhapLaiMatKhau.setErrorEnabled(true);
                         input_edNhapLaiMatKhau.setError("Mật khẩu không trùng khớp !");
                         kiemtrathongtin = false;
-                    }else{
+                    } else {
                         input_edNhapLaiMatKhau.setErrorEnabled(false);
                         input_edNhapLaiMatKhau.setError("");
                         kiemtrathongtin = true;
                     }
                 }
 
-                ;break;
+                ;
+                break;
 
         }
     }

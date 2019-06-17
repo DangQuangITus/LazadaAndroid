@@ -1,44 +1,37 @@
-var express = require('express');
+var express = require("express"),
+    bodyParser = require("body-parser"),
+    mysql = require("mysql2"),
+    morgan = require("morgan"),
+    multiparty = require("multiparty"),
+    cors = require("cors"),
+    datetime = require("node-datetime"),
+    dotenv = require("dotenv").config();
+
 var app = express();
-var bodyParser = require('body-parser');
-var mysql = require('mysql');
-var multiparty = require('multiparty');
-var datetime = require('node-datetime');
-var SERVER = "http://192.168.1.108/weblazada";
+// var productCtrl = require("./apiControllers/ProductController");
 
+app.use(morgan("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
+var SERVER = "http://192.168.10.7/weblazada";
 
 // default route
-app.get('/', function (req, res) {
-    return res.send({error: true, message: 'hello'})
+app.get("/", function(req, res) {
+    return res.send({ error: true, message: "hello" });
 });
 // connection configurations
 var dbConn = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '12345',
-    database: 'lazada'
+    host: "localhost",
+    user: "root",
+    password: "12345",
+    database: "LAZADA"
 });
 
 // connect to database
-dbConn.connect(function (err) {
-    if (err) throw err;
-    console.log("Connected!");
-});
+dbConn.connect();
 
-
-// Retrieve all users 
-// app.get('/users', function (req, res) {
-//     dbConn.query('SELECT * FROM users', function (error, results, fields) {
-//         if (error) throw error;
-//         return res.send({ users: results });
-//     });
-// });
-
+// Retrieve all users
 app.get("/get_list_users", function(req, res) {
     dbConn.query("SELECT * FROM users", function(error, results, fields) {
         if (error) throw error;
@@ -352,8 +345,8 @@ app.get("/LayDanhSachCacThuongHieuLon", function(req, res) {
     console.log(os.hostname() + " ======================LayDanhSachCacThuongHieuLon======================");
     dbConn.query(
         'SELECT th.MATHUONGHIEU, th.TENTHUONGHIEU, CONCAT("' +
-        SERVER +
-        '", cth.HINHLOAISPTH) as HINHTHUONGHIEU  FROM thuonghieu th,chitietthuonghieu cth WHERE th.MATHUONGHIEU = cth.MATHUONGHIEU',
+            SERVER +
+            '", cth.HINHLOAISPTH) as HINHTHUONGHIEU  FROM thuonghieu th,chitietthuonghieu cth WHERE th.MATHUONGHIEU = cth.MATHUONGHIEU',
         function(error, results, fields) {
             if (error) throw error;
             // console.log(results);
@@ -461,10 +454,23 @@ app.post("/DangKyThanhVien", function(req, res) {
     if (req.method === "POST") {
         var form = new multiparty.Form();
         form.parse(req, function(err, fields, files) {
-            console.log(fields);
-            res.send({
-                result: true
+            console.log("data new user: ", JSON.parse(fields.tennv[0]));
+            var sql =
+                `INSERT INTO nhanvien  (TENNV, TENDANGNHAP, MATKHAU) VALUE ('` +
+                JSON.parse(fields.tennv[0]) +
+                `', '` +
+                JSON.parse(fields.username[0]) +
+                `', '` +
+                JSON.parse(fields.password[0]) +
+                `')`;
+            dbConn.query(sql, function(error, results, fields) {
+                if (error) throw error;
+                console.log(results);
+                return res.send(results);
             });
+            // res.send({
+            //     result: true
+            // });
         });
     }
 });
@@ -498,25 +504,33 @@ app.post("/DangNhap", (req, res) => {
     if (req.method === "POST") {
         var form = new multiparty.Form();
         form.parse(req, function(err, fields, file) {
-            console.log(fields);
             if (err) {
                 console.log(err);
             } else {
-                sql = 'SELECT * FROM nhanvien WHERE TENDANGNHAP = ' + fields.username[0] + ' AND MATKHAU = ' + fields.password[0];
+                console.log("data dang nhap: ", fields);
+                sql =
+                    ` SELECT * FROM nhanvien WHERE TENDANGNHAP = '` +
+                    JSON.parse(fields.username[0]) +
+                    `' AND MATKHAU = '` +
+                    JSON.parse(fields.password[0]) +
+                    `'`;
+
                 dbConn.query(sql, function(err, result, fields) {
-                    var userRs = JSON.parse(JSON.stringify(result[0]));
-                    var user = {
-                        name: userRs.TENNV,
-                        phone: userRs.SODT,
-                        address: userRs.DIACHI
-                    };
-                    console.log(user);
                     if (err) throw err;
-                    if (result.length === 0) {
+                    console.log("result login: ", result);
+
+                    if (!result || result.length === 0) {
                         res.send({
                             result: false
                         });
                     } else {
+                        var userRs = JSON.parse(JSON.stringify(result[0]));
+                        var user = {
+                            name: userRs.TENNV,
+                            phone: userRs.SODT,
+                            address: userRs.DIACHI
+                        };
+                        console.log(user);
                         res.send({
                             result: true,
                             user: user
@@ -533,7 +547,6 @@ app.get("/LayDanhSachKhuyenMai", (req, res) => {
     var formattedDate = dt.format("Y/m/d");
     var sql =
         'SELECT * FROM chitietkhuyenmai ctkm, sanpham sp, khuyenmai km, loaisanpham lsp  WHERE ctkm.MAKM = ANY (SELECT km.MAKM FROM khuyenmai km, loaisanpham lsp WHERE DATEDIFF(km.NGAYKETTHUC,"2019/05/27") >=0 AND km.MALOAISP = lsp.MALOAISP)  AND ctkm.MASP = sp.MASP AND km.MAKM = ctkm.MAKM AND sp.MALOAISP = lsp.MALOAISP';
-    console.log(sql);
     dbConn.query(sql, function(err, result, fields) {
         var khuyenMaiRs = JSON.parse(JSON.stringify(result));
         console.log(khuyenMaiRs.length);
@@ -603,9 +616,7 @@ app.get("/LayDanhSachKhuyenMai", (req, res) => {
     });
 });
 
-// set port
-app.listen(8000, function () {
-    console.log('Node app is running on port 8000');
+var port = process.env.PORT || 8000;
+app.listen(port, () => {
+    console.log(`Backend API is running on port ${port}`);
 });
-
-module.exports = app;

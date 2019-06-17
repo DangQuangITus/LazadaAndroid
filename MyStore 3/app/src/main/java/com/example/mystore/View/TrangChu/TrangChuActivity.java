@@ -44,7 +44,7 @@ public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu,
 
 //    public static final String SERVER_NAME = "http://192.168.100.7:8000/users";
 public static final String SERVER_NAME = "http://192.168.56.1:8000";
-    public static final String SERVER = "http://192.168.56.1/weblazada";
+    public static final String SERVER = "http://192.168.10.7/weblazada";
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
