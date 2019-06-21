@@ -70,7 +70,6 @@ public class HienThiSanPhamTheoDanhMucActivity extends Fragment implements ViewH
 
         toolbar.setTitle(tensanpham);
 
-
         ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setHomeButtonEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -98,7 +97,6 @@ public class HienThiSanPhamTheoDanhMucActivity extends Fragment implements ViewH
         if (danggrid) {
             layoutManager = new GridLayoutManager(getContext(), 2);
             adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(getContext(), R.layout.custom_layout_topdienthoaivamaytinhbang, sanPhamList1);
-
         } else {
             layoutManager = new LinearLayoutManager(getContext());
             adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(getContext(), R.layout.custom_layout_list_topdienthoaivamaytinhbang, sanPhamList1);

@@ -2,6 +2,8 @@ package com.example.mystore.Presenter.ChiTietSanPham;
 
 import android.content.Context;
 
+//import com.example.mystore.Model.ChiTietSanPham.ModelChiTietSanPham;
+//import com.example.mystore.Model.GioHang.ModelGioHang;
 import com.example.mystore.Model.ChiTietSanPham.ModelChiTietSanPham;
 import com.example.mystore.Model.GioHang.ModelGioHang;
 import com.example.mystore.Model.ObjectClass.DanhGia;
@@ -9,9 +11,6 @@ import com.example.mystore.Model.ObjectClass.SanPham;
 import com.example.mystore.View.ChiTietSanPham.ViewChiTietSanPham;
 
 import java.util.List;
-
-//import com.example.mystore.Model.ChiTietSanPham.ModelChiTietSanPham;
-//import com.example.mystore.Model.GioHang.ModelGioHang;
 
 public class PresenterLogicChiTietSanPham implements IPresenterChiTietSanPham {
 

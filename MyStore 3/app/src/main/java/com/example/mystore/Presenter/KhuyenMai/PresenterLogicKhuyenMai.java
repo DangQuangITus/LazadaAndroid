@@ -7,6 +7,7 @@ import com.example.mystore.Model.KhuyenMai.ModelKhuyenMai;
 import com.example.mystore.Model.ObjectClass.ChiTietKhuyenMai;
 import com.example.mystore.Model.ObjectClass.KhuyenMai;
 import com.example.mystore.Model.ObjectClass.SanPham;
+import com.example.mystore.View.TrangChu.TrangChuActivity;
 import com.example.mystore.View.TrangChu.ViewKhuyenMai;
 
 import java.io.IOException;
@@ -16,14 +17,14 @@ import java.util.List;
 import retrofit2.Response;
 
 /**
- * Created by Lenovo S410p on 9/13/2016.
+ *
  */
 public class PresenterLogicKhuyenMai implements IPresenterKhuyenMai {
 
     ViewKhuyenMai viewKhuyenMai;
     ModelKhuyenMai modelKhuyenMai;
 
-    public PresenterLogicKhuyenMai(ViewKhuyenMai viewKhuyenMai){
+    public PresenterLogicKhuyenMai(ViewKhuyenMai viewKhuyenMai) {
         this.viewKhuyenMai = viewKhuyenMai;
         modelKhuyenMai = new ModelKhuyenMai();
     }
@@ -32,28 +33,26 @@ public class PresenterLogicKhuyenMai implements IPresenterKhuyenMai {
     public void LayDanhSachKhuyenMai() {
         List<KhuyenMai> khuyenMaiList = new ArrayList<KhuyenMai>();
         Log.d("KHUYEN_MAI", "START");
-        Thread thread = new Thread(()-> {
+        Thread thread = new Thread(() -> {
             try {
                 Response<KhuyenMai[]> response = ApiUtils.getServiceGenerator()
                         .layDanhSachKhuyenMai("test")
                         .execute();
 
-
-
                 KhuyenMai[] resultModel = response.body();
                 int dem = resultModel.length;
-
-                for(int i = 0; i < dem ;i++){
+                for (int i = 0; i < dem; i++) {
                     KhuyenMai khuyenMai = new KhuyenMai();
                     khuyenMai.setMAKM(resultModel[i].getMAKM());
                     khuyenMai.setTENKM(resultModel[i].getTENKM());
                     khuyenMai.setTENLOAISP(resultModel[i].getTENLOAISP());
                     khuyenMai.setHINHKHUYENMAI(resultModel[i].getHINHKHUYENMAI());
-
+                    khuyenMai.setHINHKHUYENMAI(TrangChuActivity.SERVER + resultModel[i].getHINHKHUYENMAI()
+                            .replaceAll(" ", "%20"));
                     List<SanPham> sanPhamList = new ArrayList<>();
                     int demsanpham = resultModel[i].getSanPhamKhuyenMaiRetrofit().length;
 
-                    for(int j=0;j<demsanpham;j++){
+                    for (int j = 0; j < demsanpham; j++) {
                         SanPham dssanpham = resultModel[i].getSanPhamKhuyenMaiRetrofit()[j];
                         SanPham sanPham = new SanPham();
                         sanPham.setMASP(dssanpham.getMASP());
@@ -70,9 +69,7 @@ public class PresenterLogicKhuyenMai implements IPresenterKhuyenMai {
                     }
 
                     khuyenMai.setDanhSachSanPhamKhuyenMai(sanPhamList);
-
                     khuyenMaiList.add(khuyenMai);
-
                 }
 
             } catch (IOException e) {
@@ -84,7 +81,7 @@ public class PresenterLogicKhuyenMai implements IPresenterKhuyenMai {
         try {
             thread.join();
             System.out.println(khuyenMaiList.size());
-            if(khuyenMaiList.size() > 0){
+            if (khuyenMaiList.size() > 0) {
                 viewKhuyenMai.HienThiDanhSachKhuyenMai(khuyenMaiList);
             }
         } catch (InterruptedException e) {

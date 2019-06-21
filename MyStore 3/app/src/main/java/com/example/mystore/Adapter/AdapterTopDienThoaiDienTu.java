@@ -16,6 +16,7 @@ import com.example.mystore.Model.ObjectClass.ChiTietKhuyenMai;
 import com.example.mystore.Model.ObjectClass.SanPham;
 import com.example.mystore.R;
 import com.example.mystore.View.ChiTietSanPham.ChiTietSanPhamActivity;
+import com.example.mystore.View.TrangChu.TrangChuActivity;
 import com.squareup.picasso.Picasso;
 
 import java.text.DecimalFormat;
@@ -54,17 +55,22 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
     public ViewHolderTopDienThoai onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View view = layoutInflater.inflate(layout, parent, false);
-
         ViewHolderTopDienThoai viewHolderTopDienThoai = new ViewHolderTopDienThoai(view);
-
         return viewHolderTopDienThoai;
     }
 
     @Override
     public void onBindViewHolder(ViewHolderTopDienThoai holder, int position) {
         SanPham sanPham = sanPhamList.get(position);
-        Log.d("hinhsanpham", sanPham.getANHLON());
-        Picasso.with(context).load(sanPham.getANHLON()).resize(140, 140).centerInside().into(holder.imHinhSanPham);
+        Log.d("hinhsanpham load ne", sanPham.getANHLON());
+        String url = "";
+        if (!sanPham.getANHLON().startsWith("http")) {
+            url = TrangChuActivity.SERVER + sanPham.getANHLON();
+        } else
+            url = sanPham.getANHLON();
+
+        Picasso.with(context).load(url).into(holder.imHinhSanPham);
+
         holder.txtTenSP.setText(sanPham.getTENSP());
 
         ChiTietKhuyenMai chiTietKhuyenMai = sanPham.getChiTietKhuyenMai();
@@ -80,7 +86,6 @@ public class AdapterTopDienThoaiDienTu extends RecyclerView.Adapter<AdapterTopDi
             holder.txtGiamGia.setText(gia + " VNĐ");
 
             giatien = giatien * phamtramkm / 100;
-
 
         }
 

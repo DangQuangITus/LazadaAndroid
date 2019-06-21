@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.mystore.Adapter.AdapterDanhGia;
 import com.example.mystore.Model.ObjectClass.DanhGia;
@@ -19,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Lenovo S410p on 8/22/2016.
+ *
  */
 public class DanhSachDanhGiaActivity extends AppCompatActivity implements ViewDanhGia, ILoadMore {
 
@@ -58,6 +59,11 @@ public class DanhSachDanhGiaActivity extends AppCompatActivity implements ViewDa
 
     @Override
     public void HienThiDanhSachDanhGiaTheoSanPham(List<DanhGia> danhGiaList) {
+        if (danhGiaList.size() < 1) {
+            Toast.makeText(getBaseContext(), "Khong co danh gia.", Toast.LENGTH_SHORT);
+            return;
+        }
+
         tatcaDanhGia.addAll(danhGiaList);
         AdapterDanhGia adapterDanhGia = new AdapterDanhGia(this, tatcaDanhGia, 0);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);

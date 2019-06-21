@@ -1,17 +1,15 @@
 package com.example.mystore.Model.ObjectClass;
 
-import android.widget.ImageView;
-
 import java.util.List;
 
 /**
- * Created by Lenovo S410p on 7/21/2016.
+ *
  */
 public class DienTu {
     List<ThuongHieu> thuongHieus;
     List<SanPham> sanPhams;
     boolean thuonghieu;
-    String tennoibat,tentopnoibat;
+    String tennoibat, tentopnoibat;
 
     public boolean isThuonghieu() {
         return thuonghieu;
@@ -20,8 +18,6 @@ public class DienTu {
     public void setThuonghieu(boolean thuonghieu) {
         this.thuonghieu = thuonghieu;
     }
-
-
 
     public String getTennoibat() {
         return tennoibat;
@@ -38,7 +34,6 @@ public class DienTu {
     public void setTentopnoibat(String tentopnoibat) {
         this.tentopnoibat = tentopnoibat;
     }
-
 
 
     public List<ThuongHieu> getThuongHieus() {

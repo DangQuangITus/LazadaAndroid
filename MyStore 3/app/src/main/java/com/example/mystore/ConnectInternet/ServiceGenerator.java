@@ -73,20 +73,24 @@ public interface ServiceGenerator {
     @POST("/thanhtoan")
     Call<String> thanhToan(@Query("hoadon") String hoadon);
 
+    @POST("/danhgia")
+    Call<String> danhGia(@Query("danhgia") String danhgia);
+
     @Multipart
     @POST("/DangKyThanhVien")
-    Call<ResultModel> dangKyThanhVien(@Part("manv")int maNv,
-                                      @Part("tennv")String tenNv,
+    Call<ResultModel> dangKyThanhVien(@Part("manv") int maNv,
+                                      @Part("tennv") String tenNv,
                                       @Part("username") String username,
-                                      @Part("password")String password,
-                                      @Part("diachi")String diaChi,
-                                      @Part("ngaysinh")String ngaySinh,
-                                      @Part("sodt")String soDt,
-                                      @Part("gioitinh")int gioiTinh,
-                                      @Part("maloainv")int maLoaiNv);
+                                      @Part("password") String password,
+                                      @Part("diachi") String diaChi,
+                                      @Part("ngaysinh") String ngaySinh,
+                                      @Part("sodt") String soDt,
+                                      @Part("gioitinh") int gioiTinh,
+                                      @Part("maloainv") int maLoaiNv);
+
     @Multipart
     @POST("/DangNhap")
-    Call<ResultModel> dangNhap(@Part("username")String username,
-                               @Part("password")String password);
+    Call<ResultModel> dangNhap(@Part("username") String username,
+                               @Part("password") String password);
 
 }

@@ -6,7 +6,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
 import com.example.mystore.ConnectInternet.ApiUtils;
+import com.example.mystore.ConnectInternet.DownloadJSON;
 import com.example.mystore.Model.ResultModel;
+import com.example.mystore.View.TrangChu.TrangChuActivity;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.google.android.gms.auth.api.Auth;
@@ -15,13 +17,20 @@ import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import retrofit2.Response;
 
 /**
- * Created by Lenovo S410p on 7/2/2016.
+ *
  */
 public class ModelDangNhap {
     AccessToken accessToken;
@@ -64,15 +73,15 @@ public class ModelDangNhap {
         Thread thread = new Thread(() -> {
             try {
                 Response<ResultModel> response = ApiUtils.getServiceGenerator()
-                        .dangNhap(tendangnhap,matkhau)
+                        .dangNhap(tendangnhap, matkhau)
                         .execute();
 
                 ResultModel result = response.body();
 
 
-                if(result.getResult().equals(true)){
+                if (result.getResult().equals(true)) {
                     kiemtra.set(true);
-                    CapNhatCachedDangNhap(context,result.getUser().getName());
+                    CapNhatCachedDangNhap(context, result.getUser().getName());
                 }
             } catch (IOException e) {
                 e.printStackTrace();

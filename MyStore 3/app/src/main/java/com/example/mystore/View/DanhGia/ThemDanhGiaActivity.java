@@ -20,7 +20,7 @@ import com.example.mystore.R;
 import java.util.List;
 
 /**
- * Created by Lenovo S410p on 8/18/2016.
+ *
  */
 public class ThemDanhGiaActivity extends AppCompatActivity implements RatingBar.OnRatingBarChangeListener, ViewDanhGia, View.OnClickListener {
 
@@ -78,7 +78,6 @@ public class ThemDanhGiaActivity extends AppCompatActivity implements RatingBar.
     @Override
     public void onClick(View v) {
         TelephonyManager telephonyManager = (TelephonyManager) getSystemService(TELEPHONY_SERVICE);
-        @SuppressLint("MissingPermission") String madg = telephonyManager.getDeviceId();
         String tenthietbi = Build.MODEL;
         String tieude = edTieuDe.getText().toString();
         String noidung = edNoiDung.getText().toString();
@@ -102,7 +101,6 @@ public class ThemDanhGiaActivity extends AppCompatActivity implements RatingBar.
         if (!input_edNoiDung.isErrorEnabled() && !input_edTieuDe.isErrorEnabled()) {
             DanhGia danhGia = new DanhGia();
             danhGia.setMASP(masp);
-            danhGia.setMADG(madg);
             danhGia.setTIEUDE(tieude);
             danhGia.setNOIDUNG(noidung);
             danhGia.setSOSAO(sosao);

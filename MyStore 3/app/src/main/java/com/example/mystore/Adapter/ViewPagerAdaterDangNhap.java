@@ -15,16 +15,15 @@ public class ViewPagerAdaterDangNhap extends FragmentPagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        switch (position) {
-            case 0:
+        switch (position){
+            case 0 :
                 FragmentDangNhap fragmentDangNhap = new FragmentDangNhap();
                 return fragmentDangNhap;
-            case 1:
+            case 1 :
                 FragmentDangKy fragmentDangKy = new FragmentDangKy();
                 return fragmentDangKy;
 
-            default:
-                return null;
+            default: return null;
         }
 
     }
@@ -36,14 +35,13 @@ public class ViewPagerAdaterDangNhap extends FragmentPagerAdapter {
 
     @Override
     public CharSequence getPageTitle(int position) {
-        switch (position) {
-            case 0:
+        switch (position){
+            case 0 :
                 return "Đăng nhập";
-            case 1:
+            case 1 :
                 return "Đăng ký";
 
-            default:
-                return "";
+            default: return null;
         }
 
     }

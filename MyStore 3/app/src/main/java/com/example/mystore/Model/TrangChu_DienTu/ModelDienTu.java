@@ -24,7 +24,7 @@ public class ModelDienTu {
     public static List<ThuongHieu> topTienIchList = new ArrayList<>();
     public static List<ThuongHieu> logoList = new ArrayList<>();
 
-    public List<SanPham> LayDanhSachSanPhamTOP(String tenham, String tenmang){
+    public List<SanPham> LayDanhSachSanPhamTOP(String tenham, String tenmang) {
         sanPhamList.clear();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -59,7 +59,7 @@ public class ModelDienTu {
         return sanPhamList;
     }
 
-    public List<ThuongHieu> LayDanhSachThuongHieuLon(String tenham, String tenmang){
+    public List<ThuongHieu> LayDanhSachThuongHieuLon(String tenham, String tenmang) {
         thuongHieuList.clear();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -86,30 +86,11 @@ public class ModelDienTu {
             e.printStackTrace();
         }
 
-//        ThuongHieu t =new ThuongHieu();
-//        t.setHINHTHUONGHIEU("http://192.168.100.7/weblazada/hinhthuonghieu/apple.png");
-//        t.setTENTHUONGHIEU("Apple");
-//        t.setMATHUONGHIEU(1);
-//
-//        ThuongHieu t1 =new ThuongHieu();
-//        t1.setHINHTHUONGHIEU("http://192.168.100.7/weblazada/hinhthuonghieu/asus.png");
-//        t1.setTENTHUONGHIEU("Apple");
-//        t1.setMATHUONGHIEU(2);
-//
-//        ThuongHieu t2 =new ThuongHieu();
-//        t2.setHINHTHUONGHIEU("http://192.168.100.7/weblazada/hinhthuonghieu/dell.png");
-//        t2.setTENTHUONGHIEU("Apple");
-//        t2.setMATHUONGHIEU(3);
-//
-//        thuongHieuList.add(t);
-//        thuongHieuList.add(t1);
-//        thuongHieuList.add(t2);
-
-        Log.d("CNT", thuongHieuList.get(3).getTENTHUONGHIEU() + thuongHieuList.size());
+//        Log.d("CNT", thuongHieuList.get(3).getTENTHUONGHIEU() + thuongHieuList.size());
         return thuongHieuList;
     }
 
-    public List<SanPham> LayDanhSachPhuKien(String tenham, String tenmang){
+    public List<SanPham> LayDanhSachPhuKien(String tenham, String tenmang) {
         phuKienList.clear();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -144,7 +125,7 @@ public class ModelDienTu {
         return phuKienList;
     }
 
-    public List<ThuongHieu> LayDanhSachTopPhuKien(String tenham, String tenmang){
+    public List<ThuongHieu> LayDanhSachTopPhuKien(String tenham, String tenmang) {
         topPhuKienList.clear();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -175,7 +156,7 @@ public class ModelDienTu {
         return topPhuKienList;
     }
 
-    public List<SanPham> LayDanhSachTienIch(String tenham, String tenmang){
+    public List<SanPham> LayDanhSachTienIch(String tenham, String tenmang) {
         tienIchList.clear();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -210,7 +191,7 @@ public class ModelDienTu {
         return tienIchList;
     }
 
-    public List<ThuongHieu> LayDanhSachTopTienIch(String tenham, String tenmang){
+    public List<ThuongHieu> LayDanhSachTopTienIch(String tenham, String tenmang) {
         topTienIchList.clear();
         Thread t = new Thread(new Runnable() {
             @Override
@@ -241,7 +222,7 @@ public class ModelDienTu {
         return topTienIchList;
     }
 
-    public List<ThuongHieu> LayDanhSachLogoThuongHieu(String tenham, String tenmang){
+    public List<ThuongHieu> LayDanhSachLogoThuongHieu(String tenham, String tenmang) {
         logoList.clear();
         Thread t = new Thread(new Runnable() {
             @Override

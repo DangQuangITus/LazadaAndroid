@@ -11,7 +11,7 @@ import com.example.mystore.Adapter.ViewPagerAdaterDangNhap;
 import com.example.mystore.R;
 
 /**
- * Created by Lenovo S410p on 6/29/2016.
+ *
  */
 public class DangNhapActivity extends AppCompatActivity {
     TabLayout tabLayout;

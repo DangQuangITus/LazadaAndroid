@@ -4,8 +4,9 @@ import java.util.List;
 
 public class HoaDon {
 
-    int MaHD,ChuyenKhoan;
-    String NgayMua,NgayGiao,TrangThai,TenNguoiNhan,SoDT,DiaChi,MaChuyenKhoan;
+    int MaHD, ChuyenKhoan;
+    double amount;
+    String NgayMua, NgayGiao, TrangThai, TenNguoiNhan, SoDT, DiaChi, MaChuyenKhoan;
     List<ChiTietHoaDon> chiTietHoaDonList;
 
     public int getMaHD() {
@@ -14,6 +15,14 @@ public class HoaDon {
 
     public void setMaHD(int maHD) {
         MaHD = maHD;
+    }
+
+    public double getAmount() {
+        return amount;
+    }
+
+    public void setAmount(double amount) {
+        this.amount = amount;
     }
 
     public int getChuyenKhoan() {
@@ -87,7 +96,6 @@ public class HoaDon {
     public void setChiTietHoaDonList(List<ChiTietHoaDon> chiTietHoaDonList) {
         this.chiTietHoaDonList = chiTietHoaDonList;
     }
-
 
 
 }

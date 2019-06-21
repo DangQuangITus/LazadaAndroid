@@ -11,12 +11,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp">
 
-        <com.example.mystore.CustomView.ClearEditText
+        <EditText
             android:id="@+id/edDiaChiEmailDangNhap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingTop="110dp"
             android:hint="Địa chỉ email"
+            android:paddingTop="110dp"
             android:textColor="@color/colorBlack" />
 
     </android.support.design.widget.TextInputLayout>

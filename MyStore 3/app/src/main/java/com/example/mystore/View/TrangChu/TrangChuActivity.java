@@ -32,19 +32,23 @@ import com.example.mystore.R;
 import com.example.mystore.View.DangNhapDangKy.DangNhapActivity;
 import com.example.mystore.View.GioHang.GioHangActivity;
 import com.facebook.AccessToken;
+import com.facebook.login.LoginManager;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInResult;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.List;
 
+//import com.example.mystore.View.DangNhapDangKy.Fragment.DangNhapActivity;
+
 public class TrangChuActivity extends AppCompatActivity implements ViewXuLyMenu, GoogleApiClient.OnConnectionFailedListener, AppBarLayout.OnOffsetChangedListener {
     public static List<LoaiSanPham> listSP = null;
     public static Context context;
 
-//    public static final String SERVER_NAME = "http://192.168.100.7:8000/users";
-public static final String SERVER_NAME = "http://192.168.56.1:8000";
-    public static final String SERVER = "http://192.168.10.7/weblazada";
+    public static final String SERVER_NAME = "http://10.0.2.2:8000";
+    public static final String SERVER = "http://10.10.99.159/weblazada";
+
     Toolbar toolbar;
     TabLayout tabLayout;
     ViewPager viewPager;
@@ -64,12 +68,15 @@ public static final String SERVER_NAME = "http://192.168.56.1:8000";
     TextView txtGioHang;
     boolean onPause = false;
 
+
+    boolean DNTC = false;
+    String user = "";
+
     Handler myHandler = new Handler();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        FacebookSdk.sdkInitialize(getApplicationContext());
 
         setContentView(R.layout.trangchu_layout);
 
@@ -88,6 +95,7 @@ public static final String SERVER_NAME = "http://192.168.56.1:8000";
         drawerLayout.addDrawerListener(drawerToggle);
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // đồng bộ drawerLayout
         drawerToggle.syncState();
 
@@ -99,11 +107,13 @@ public static final String SERVER_NAME = "http://192.168.56.1:8000";
         logicXuLyMenu = new PresenterLogicXuLyMenu(this);
         modelDangNhap = new ModelDangNhap();
 
+        DNTC = getIntent().getBooleanExtra("DNTC", false);
+        user = getIntent().getStringExtra("user");
+
+
         // hàm này
         logicXuLyMenu.LayDanhSachMenu();
-
         mGoogleApiClient = modelDangNhap.LayGoogleApiClient(this, this);
-
         appBarLayout.addOnOffsetChangedListener(this);
     }
 
@@ -124,52 +134,15 @@ public static final String SERVER_NAME = "http://192.168.56.1:8000";
             }
         });
 //
-//        PresenterLogicChiTietSanPham presenterLogicChiTietSanPham = new PresenterLogicChiTietSanPham();
-//        txtGioHang.setText(String.valueOf(presenterLogicChiTietSanPham.DemSanPhamCoTrongGioHang(this)));
 //
         itemDangNhap = menu.findItem(R.id.itDangNhap);
         menuITDangXuat = menu.findItem(R.id.itDangXuat);
-//
-//        accessToken = logicXuLyMenu.LayTokenDungFacebook();
-//        googleSignInResult = modelDangNhap.LayThongDangNhapGoogle(mGoogleApiClient);
-//
-//        if(accessToken != null){
-//            GraphRequest graphRequest = GraphRequest.newMeRequest(accessToken, new GraphRequest.GraphJSONObjectCallback() {
-//                @Override
-//                public void onCompleted(JSONObject object, GraphResponse response) {
-//                    try {
-//                        tennguoidung = object.getString("name");
-//
-//                        itemDangNhap.setTitle(tennguoidung);
-//
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            });
-//
-//            Bundle parameter = new Bundle();
-//            parameter.putString("fields","name");
-//
-//            graphRequest.setParameters(parameter);
-//            graphRequest.executeAsync();
-//        }
-//
-//
-//        if(googleSignInResult != null){
-//            itemDangNhap.setTitle(googleSignInResult.getSignInAccount().getDisplayName());
-//            Log.d("goo",googleSignInResult.getSignInAccount().getDisplayName());
-//        }
-//
-//        String tennv = modelDangNhap.LayCachedDangNhap(this);
-//        if(!tennv.equals("")){
-//            itemDangNhap.setTitle(tennv);
-//        }
-//
-//
-//        if(accessToken != null || googleSignInResult != null || !tennv .equals("")){
-//            menuITDangXuat.setVisible(true);
-//        }
+
+        if (DNTC == true) {
+            System.out.println("change login: " + DNTC);
+            itemDangNhap.setVisible(false);
+            menuITDangXuat.setVisible(true);
+        }
 
         return true;
     }
@@ -189,26 +162,26 @@ public static final String SERVER_NAME = "http://192.168.56.1:8000";
                 TrangChuActivity.this.startActivity(iDangNhap);
 //                };
                 break;
-//            case R.id.itDangXuat:
-//                if(accessToken != null){
-//                    LoginManager.getInstance().logOut();
-//                    this.menu.clear();
-//                    this.onCreateOptionsMenu(this.menu);
-//                }
-//
-//                if(googleSignInResult != null){
-//                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
-//                    this.menu.clear();
-//                    this.onCreateOptionsMenu(this.menu);
-//
-//                }
-//
-//                if(!modelDangNhap.LayCachedDangNhap(this).equals("")){
-//                    modelDangNhap.CapNhatCachedDangNhap(this,"");
-//                    this.menu.clear();
-//                    this.onCreateOptionsMenu(this.menu);
-//                }
-//                break;
+            case R.id.itDangXuat:
+                if (accessToken != null) {
+                    LoginManager.getInstance().logOut();
+                    this.menu.clear();
+                    this.onCreateOptionsMenu(this.menu);
+                }
+
+                if (googleSignInResult != null) {
+                    Auth.GoogleSignInApi.signOut(mGoogleApiClient);
+                    this.menu.clear();
+                    this.onCreateOptionsMenu(this.menu);
+
+                }
+
+                if (!modelDangNhap.LayCachedDangNhap(this).equals("")) {
+                    modelDangNhap.CapNhatCachedDangNhap(this, "");
+                    this.menu.clear();
+                    this.onCreateOptionsMenu(this.menu);
+                }
+                break;
 //
 //            case R.id.itSearch:
 //                Intent iTimKiem = new Intent(this, TimKiemActivity.class);
@@ -238,8 +211,7 @@ public static final String SERVER_NAME = "http://192.168.56.1:8000";
 
     @Override
     public void HienThiDanhSachMenuCon(ExpandAdater.SecondExpanable secondExpanable, ExpandAdater secondAdapter) {
-       runOnUiThread( () -> secondExpanable.setAdapter(secondAdapter));
-
+        runOnUiThread(() -> secondExpanable.setAdapter(secondAdapter));
     }
 
     @Override

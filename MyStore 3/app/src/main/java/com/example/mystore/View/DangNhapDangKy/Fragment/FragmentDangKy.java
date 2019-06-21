@@ -15,7 +15,6 @@ import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.mystore.CustomView.PasswordEditText;
 import com.example.mystore.Model.ObjectClass.NhanVien;
 import com.example.mystore.Presenter.DangKy.PresenterLogicDangKy;
 import com.example.mystore.R;
@@ -25,7 +24,6 @@ import com.example.mystore.View.DangNhapDangKy.ViewDangKy;
  *
  */
 public class FragmentDangKy extends Fragment implements ViewDangKy, View.OnClickListener, View.OnFocusChangeListener {
-
     PresenterLogicDangKy presenterLogicDangKy;
     Button btnDangKy;
     EditText edHoTen, edMatKhau, edNhapLaiMatKhau, edDiaChiEmail;
@@ -43,8 +41,8 @@ public class FragmentDangKy extends Fragment implements ViewDangKy, View.OnClick
 
         btnDangKy = (Button) view.findViewById(R.id.btnDangKy);
         edHoTen = (EditText) view.findViewById(R.id.edHoTenDK);
-        edMatKhau = view.findViewById(R.id.edMatKhauDK);
-        edNhapLaiMatKhau = view.findViewById(R.id.edNhapLaiMatKhauDK);
+        edMatKhau = (EditText) view.findViewById(R.id.edMatKhauDK);
+        edNhapLaiMatKhau = (EditText) view.findViewById(R.id.edNhapLaiMatKhauDK);
         edDiaChiEmail = (EditText) view.findViewById(R.id.edDiaChiEmailDK);
         sEmailDocQuyen = (SwitchCompat) view.findViewById(R.id.sEmailDocQuyen);
         input_edHoTen = (TextInputLayout) view.findViewById(R.id.input_edHoTenDK);

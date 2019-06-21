@@ -14,7 +14,7 @@ import com.example.mystore.R;
 import java.util.List;
 
 /**
- * Created by Lenovo S410p on 8/18/2016.
+ *
  */
 public class AdapterDanhGia extends RecyclerView.Adapter<AdapterDanhGia.ViewHolderDanhGia> {
 
@@ -22,30 +22,30 @@ public class AdapterDanhGia extends RecyclerView.Adapter<AdapterDanhGia.ViewHold
     int limit;
     Context context;
 
-    public AdapterDanhGia(Context context, List<DanhGia> danhGiaList, int limit){
+    public AdapterDanhGia(Context context, List<DanhGia> danhGiaList, int limit) {
         this.danhGiaList = danhGiaList;
         this.limit = limit;
         this.context = context;
     }
 
     public class ViewHolderDanhGia extends RecyclerView.ViewHolder {
-        TextView txtTieuDeDanhGia,txtNoiDungDanhGia,txtDuocDanhGiaBoi;
+        TextView txtTieuDeDanhGia, txtNoiDungDanhGia, txtDuocDanhGiaBoi;
         RatingBar rbDanhGia;
 
         public ViewHolderDanhGia(View itemView) {
             super(itemView);
 
-//            txtDuocDanhGiaBoi = (TextView) itemView.findViewById(R.id.txtDuocDangBoi);
-//            txtNoiDungDanhGia = (TextView) itemView.findViewById(R.id.txtNoiDungDanhGia);
-//            txtTieuDeDanhGia = (TextView) itemView.findViewById(R.id.txtTieuDeDanhGia);
-//            rbDanhGia = (RatingBar) itemView.findViewById(R.id.rbDanhGia);
+            txtDuocDanhGiaBoi = (TextView) itemView.findViewById(R.id.txtDuocDangBoi);
+            txtNoiDungDanhGia = (TextView) itemView.findViewById(R.id.txtNoiDungDanhGia);
+            txtTieuDeDanhGia = (TextView) itemView.findViewById(R.id.txtTieuDeDanhGia);
+            rbDanhGia = (RatingBar) itemView.findViewById(R.id.rbDanhGia);
         }
     }
 
     @Override
     public ViewHolderDanhGia onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = null;// = layoutInflater.inflate(R.layout.custom_layout_recycler_danhgia_chitiet,parent,false);
+        View view = layoutInflater.inflate(R.layout.custom_layout_recycler_danhgia_chitiet, parent, false);
 
         ViewHolderDanhGia viewHolderDanhGia = new ViewHolderDanhGia(view);
 
@@ -54,6 +54,10 @@ public class AdapterDanhGia extends RecyclerView.Adapter<AdapterDanhGia.ViewHold
 
     @Override
     public void onBindViewHolder(ViewHolderDanhGia holder, int position) {
+        if (danhGiaList.size() == 0) {
+            holder.txtTieuDeDanhGia.setText("Khong co danh gia nao.");
+
+        }
         DanhGia danhGia = danhGiaList.get(position);
 
         holder.txtTieuDeDanhGia.setText(danhGia.getTIEUDE());
@@ -65,12 +69,12 @@ public class AdapterDanhGia extends RecyclerView.Adapter<AdapterDanhGia.ViewHold
     @Override
     public int getItemCount() {
         int dong = 0;
-        if(danhGiaList.size() < limit){
+        if (danhGiaList.size() < limit) {
             dong = danhGiaList.size();
-        }else{
-            if(limit !=0){
+        } else {
+            if (limit != 0) {
                 dong = limit;
-            }else{
+            } else {
                 dong = danhGiaList.size();
             }
         }

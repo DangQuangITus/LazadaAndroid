@@ -2,6 +2,7 @@ package com.example.mystore.Presenter.DanhGia;
 
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.example.mystore.Model.DanhGia.ModelDanhGia;
 import com.example.mystore.Model.ObjectClass.DanhGia;
@@ -37,9 +38,9 @@ public class PresenterLogicDanhGia implements IPresenterDanhGia {
         progressBar.setVisibility(View.VISIBLE);
         List<DanhGia> danhGiaList = modelDanhGia.LayDanhSachDanhGiaCuaSanPham(masp, limit);
 
-        if (danhGiaList.size() > 0) {
+//        if (danhGiaList.size() > 0) {
             progressBar.setVisibility(View.GONE);
             viewDanhGia.HienThiDanhSachDanhGiaTheoSanPham(danhGiaList);
-        }
+//        }
     }
 }

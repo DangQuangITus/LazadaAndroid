@@ -27,21 +27,16 @@ public class FragmentNoiBat extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_noibat,container,false);
+        View view = inflater.inflate(R.layout.layout_noibat, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyleNoiBat);
-        List<String> dulieu = new ArrayList<>();
         ModelDienTu modelDienTu = new ModelDienTu();
-        List<SanPham> sanPhamList = modelDienTu.LayDanhSachSanPhamTOP("LayDanhSachTopDienThoaiVaMayTinhBang","TOPDIENTHOAI&MAYTINHBANG");
-        for (int i=0 ;i<50;i++){
-            String ten = " San pham noi bat " + i;
-            dulieu.add(ten);
-        }
+        List<SanPham> sanPhamList = modelDienTu.LayDanhSachSanPhamTOP("LayDanhSachTopDienThoaiVaMayTinhBang", "TOPDIENTHOAI&MAYTINHBANG");
 
 
 //        RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(),3);
-        adapterNoiBat = new AdapterNoiBat(getActivity(),dulieu);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getActivity(), 2);
+        adapterNoiBat = new AdapterNoiBat(getActivity(), sanPhamList);
 
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterNoiBat);

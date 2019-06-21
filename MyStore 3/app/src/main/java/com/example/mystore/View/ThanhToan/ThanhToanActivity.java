@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  */
 public class ThanhToanActivity extends AppCompatActivity implements View.OnClickListener, ViewThanhToan {
     Toolbar toolbar;
@@ -37,6 +38,7 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
     PresenterLogicThanhToan presenterLogicThanhToan;
     List<ChiTietHoaDon> chiTietHoaDons = new ArrayList<>();
     int chonHinhThuc = 0;
+    double amount = 0.0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -56,7 +58,7 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
 
         presenterLogicThanhToan = new PresenterLogicThanhToan(this, this);
         presenterLogicThanhToan.LayDanhSachSanPhamTrongGioHang();
-
+        amount = getIntent().getDoubleExtra("amount", 0.0);
         setSupportActionBar(toolbar);
 
         btnThanhToan.setOnClickListener(this);
@@ -82,6 +84,7 @@ public class ThanhToanActivity extends AppCompatActivity implements View.OnClick
                         hoaDon.setDiaChi(diachi);
                         hoaDon.setChuyenKhoan(chonHinhThuc);
                         hoaDon.setChiTietHoaDonList(chiTietHoaDons);
+                        hoaDon.setAmount(amount);
                         presenterLogicThanhToan.ThemHoaDon(hoaDon);
 
                     } else {

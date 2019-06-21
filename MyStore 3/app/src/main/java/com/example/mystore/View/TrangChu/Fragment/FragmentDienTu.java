@@ -39,11 +39,11 @@ import java.util.Random;
 
 public class FragmentDienTu extends Fragment implements ViewDienTu {
 
-    RecyclerView recyclerView,recylerTopCacThuongHieuLon,recylerHangMoiVe;
+    RecyclerView recyclerView, recylerTopCacThuongHieuLon, recylerHangMoiVe;
     List<DienTu> dienTuList;
     PresenterLogicDienTu presenterLogicDienTu;
-    ImageView imSanPham1,imSanPham2,imSanPham3;
-    TextView txtSanPham1,txtSanPham2,txtSanPham3;
+    ImageView imSanPham1, imSanPham2, imSanPham3;
+    TextView txtSanPham1, txtSanPham2, txtSanPham3;
 
     //add
     List<ThuongHieu> thuongHieuList;
@@ -51,7 +51,7 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_dientu,container,false);
+        View view = inflater.inflate(R.layout.layout_dientu, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerDienTu);
         recylerTopCacThuongHieuLon = (RecyclerView) view.findViewById(R.id.recylerTopCacThuongHieuLon);
@@ -64,13 +64,10 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
         txtSanPham3 = (TextView) view.findViewById(R.id.txtSanPham3);
 
         presenterLogicDienTu = new PresenterLogicDienTu(this);
-
         dienTuList = new ArrayList<>();
 
         // add
         thuongHieuList = new ArrayList<>();
-//        presenterLogicDienTu.LayDanhSachDienTu();
-
         presenterLogicDienTu.LayDanhSachDienTu();
         presenterLogicDienTu.LayDanhSachLogoThuongHieu();
         presenterLogicDienTu.LayDanhSachSanPhamMoi();
@@ -82,14 +79,10 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
     public void HienThiDanhSach(List<DienTu> dienTus) {
 
         dienTuList = dienTus;
-
-        AdapterDienTu adapterDienTu = new AdapterDienTu(getContext(),dienTuList);
-
+        AdapterDienTu adapterDienTu = new AdapterDienTu(getContext(), dienTuList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterDienTu);
-
         adapterDienTu.notifyDataSetChanged();
     }
 
@@ -98,16 +91,11 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
     public void HienThiDanhSachThuongHieu(List<ThuongHieu> thuongHieus) {
 
         thuongHieuList = thuongHieus;
-
         DienTu dienTu = new DienTu();
         dienTu.setThuongHieus(thuongHieus);
-
         dienTuList.add(dienTu);
-
-        AdapterDienTu adapterDienTu = new AdapterDienTu(getContext(),dienTuList);
-
+        AdapterDienTu adapterDienTu = new AdapterDienTu(getContext(), dienTuList);
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getContext());
-
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapterDienTu);
 
@@ -116,9 +104,9 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
 
     @Override
     public void HienThiLogoThuongHieu(List<ThuongHieu> thuongHieus) {
-        AdapterThuongHieuLonDienTu adapterThuongHieuLonDienTu = new AdapterThuongHieuLonDienTu(getContext(),thuongHieus);
+        AdapterThuongHieuLonDienTu adapterThuongHieuLonDienTu = new AdapterThuongHieuLonDienTu(getContext(), thuongHieus);
 
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(),2,GridLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(getContext(), 2, GridLayoutManager.HORIZONTAL, false);
 
         recylerTopCacThuongHieuLon.setLayoutManager(layoutManager);
         recylerTopCacThuongHieuLon.setAdapter(adapterThuongHieuLonDienTu);
@@ -133,9 +121,9 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
 
     @Override
     public void HienThiSanPhamMoiVe(List<SanPham> sanPhams) {
-        AdapterTopDienThoaiDienTu adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(getContext(),R.layout.custom_layout_topdienthoaivamaytinhbang,sanPhams);
+        AdapterTopDienThoaiDienTu adapterTopDienThoaiDienTu = new AdapterTopDienThoaiDienTu(getContext(), R.layout.custom_layout_topdienthoaivamaytinhbang, sanPhams);
 
-        RecyclerView.LayoutManager layoutManagerTop = new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+        RecyclerView.LayoutManager layoutManagerTop = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         recylerHangMoiVe.setLayoutManager(layoutManagerTop);
         recylerHangMoiVe.setAdapter(adapterTopDienThoaiDienTu);
 
@@ -145,19 +133,19 @@ public class FragmentDienTu extends Fragment implements ViewDienTu {
         int vitri = random.nextInt(sanPhams.size());
 
 //        Picasso.with(getContext()).load(sanPhams.get(vitri).getANHLON()).fit().centerInside().into(imSanPham1);
-        Picasso.with(getContext()).load(sanPhams.get(vitri).getANHLON()).resize(180,90).centerInside().into(imSanPham1);
+        Picasso.with(getContext()).load(sanPhams.get(vitri).getANHLON()).resize(180, 90).centerInside().into(imSanPham1);
 
         txtSanPham1.setText(sanPhams.get(vitri).getTENSP());
 //        Log.d("SANPHAMMOIVE", sanPhams.get(vitri).getANHLON());
         int vitri1 = random.nextInt(sanPhams.size());
 //        Picasso.with(getContext()).load(sanPhams.get(vitri1).getANHLON()).fit().centerInside().into(imSanPham2);
-        Picasso.with(getContext()).load(sanPhams.get(vitri1).getANHLON()).resize(180,90).centerInside().into(imSanPham2);
+        Picasso.with(getContext()).load(sanPhams.get(vitri1).getANHLON()).resize(180, 90).centerInside().into(imSanPham2);
 
         txtSanPham2.setText(sanPhams.get(vitri1).getTENSP());
 
         int vitri2 = random.nextInt(sanPhams.size());
 //        Picasso.with(getContext()).load(sanPhams.get(vitri2).getANHLON()).fit().centerInside().into(imSanPham3);
-        Picasso.with(getContext()).load(sanPhams.get(vitri2).getANHLON()).resize(180,90).centerInside().into(imSanPham3);
+        Picasso.with(getContext()).load(sanPhams.get(vitri2).getANHLON()).resize(180, 90).centerInside().into(imSanPham3);
 
         txtSanPham3.setText(sanPhams.get(vitri2).getTENSP());
     }

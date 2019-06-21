@@ -1,11 +1,26 @@
 package com.example.mystore.Model.ChiTietSanPham;
 
+import android.util.Log;
+
 import com.example.mystore.ConnectInternet.ApiUtils;
+import com.example.mystore.ConnectInternet.DownloadJSON;
+import com.example.mystore.Model.ObjectClass.ChiTietKhuyenMai;
+import com.example.mystore.Model.ObjectClass.ChiTietSanPham;
 import com.example.mystore.Model.ObjectClass.DanhGia;
+import com.example.mystore.Model.ObjectClass.Res.SanPhamResponse;
 import com.example.mystore.Model.ObjectClass.SanPham;
+import com.example.mystore.View.TrangChu.TrangChuActivity;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import retrofit2.Response;
 

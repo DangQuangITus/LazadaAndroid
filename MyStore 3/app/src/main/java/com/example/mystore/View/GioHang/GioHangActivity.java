@@ -23,6 +23,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewGioHang, V
     PresenterLogicGioHang presenterLogicGioHang = null;
     Toolbar toolbar = null;
     Button btnMuaNgay;
+    List<SanPham> g_cartItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +41,16 @@ public class GioHangActivity extends AppCompatActivity implements ViewGioHang, V
 
     }
 
+    double g_totalAmount = 0.0;
+
     @Override
     public void HienThiDanhSachSanPhamTrongGioHang(List<SanPham> sanPhamList) {
+        g_cartItems = sanPhamList;
+        for (SanPham sp : g_cartItems) {
+            g_totalAmount += sp.getGIA();
+        }
+        System.out.println("total amount: " + String.valueOf(g_totalAmount));
+
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         AdapterGioHang adapterGioHang = new AdapterGioHang(this, sanPhamList);
         recyclerView.setLayoutManager(layoutManager);
@@ -54,6 +63,7 @@ public class GioHangActivity extends AppCompatActivity implements ViewGioHang, V
         switch (id) {
             case R.id.btnMuaNgay:
                 Intent iThanhToan = new Intent(GioHangActivity.this, ThanhToanActivity.class);
+                iThanhToan.putExtra("amount", g_totalAmount);
                 this.startActivity(iThanhToan);
                 break;
         }

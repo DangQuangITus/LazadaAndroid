@@ -3,15 +3,16 @@ package com.example.mystore.Model.ThanhToan;
 import android.util.Log;
 
 import com.example.mystore.ConnectInternet.ApiUtils;
+import com.example.mystore.Model.ObjectClass.DanhGia;
 import com.example.mystore.Model.ObjectClass.HoaDon;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.List;
 
 import retrofit2.Response;
 
 /**
- * Created by Lenovo S410p on 9/5/2016.
  */
 public class ModelThanhToan {
     String ketqua;

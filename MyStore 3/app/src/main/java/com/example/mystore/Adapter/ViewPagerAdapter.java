@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Lenovo S410p on 6/23/2016.
  */
 public class ViewPagerAdapter extends FragmentPagerAdapter {
 

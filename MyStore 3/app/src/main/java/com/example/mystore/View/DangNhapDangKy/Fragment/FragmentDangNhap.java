@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mystore.Model.DangNhap_DangKy.ModelDangNhap;
@@ -29,25 +32,25 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import java.util.Arrays;
 
 /**
- * Created by Lenovo S410p on 6/29/2016.
+ *
  */
 public class FragmentDangNhap extends Fragment implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-    Button btnDangNhapFacebook,btnDangNhapGoogle,btnDangNhap;
+    Button btnDangNhapFacebook, btnDangNhapGoogle, btnDangNhap;
     CallbackManager callbackManager;
     GoogleApiClient mGoogleApiClient;
     public static int SIGN_IN_GOOGLE_PLUS = 111;
     ProgressDialog progressDialog;
     ModelDangNhap modelDangNhap;
-    EditText edTenDangNhap,edMatKhau;
+    EditText edTenDangNhap, edMatKhau;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_fragment_dangnhap,container,false);
+        View view = inflater.inflate(R.layout.layout_fragment_dangnhap, container, false);
 
         modelDangNhap = new ModelDangNhap();
-        mGoogleApiClient = modelDangNhap.LayGoogleApiClient(getContext(),this);
+        mGoogleApiClient = modelDangNhap.LayGoogleApiClient(getContext(), this);
 
         FacebookSdk.sdkInitialize(getContext().getApplicationContext());
         callbackManager = CallbackManager.Factory.create();
@@ -85,39 +88,45 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     @Override
     public void onClick(View view) {
         int id = view.getId();
-        switch (id){
+        switch (id) {
 
             case R.id.btnDangNhapFacebook:
                 LoginManager.getInstance().logInWithReadPermissions(FragmentDangNhap.this, Arrays.asList("public_profile"));
                 Intent iTrangChiFacebook = new Intent(getActivity(), TrangChuActivity.class);
                 startActivity(iTrangChiFacebook);
-                ;break;
+                ;
+                break;
 
             case R.id.btnDangNhapGoogle:
                 Intent iGooglePlus = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
-                startActivityForResult(iGooglePlus,SIGN_IN_GOOGLE_PLUS);
+                startActivityForResult(iGooglePlus, SIGN_IN_GOOGLE_PLUS);
                 showProcessDialog();
                 Intent iTrangChuGoogle = new Intent(getActivity(), TrangChuActivity.class);
                 startActivity(iTrangChuGoogle);
-                ;break;
+                ;
+                break;
 
             case R.id.btnDangNhap:
                 String tendangnhap = edTenDangNhap.getText().toString();
                 String matkhau = edMatKhau.getText().toString();
-                boolean kiemtra = modelDangNhap.KiemTraDangNhap(getActivity(),tendangnhap,matkhau);
-                if(kiemtra){
+                boolean kiemtra = modelDangNhap.KiemTraDangNhap(getActivity(), tendangnhap, matkhau);
+                if (kiemtra) {
                     Intent iTrangChu = new Intent(getActivity(), TrangChuActivity.class);
+                    boolean DNTC = true;
+                    iTrangChu.putExtra("result", DNTC);
+                    iTrangChu.putExtra("user", tendangnhap);
                     startActivity(iTrangChu);
-                }else{
-                    Toast.makeText(getActivity(),"Tên đăng nhập và mật khẩu không đúng !",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Tên đăng nhập và mật khẩu không đúng !", Toast.LENGTH_SHORT).show();
                 }
-                ;break;
+                ;
+                break;
         }
 
     }
 
-    private void showProcessDialog(){
-        if(progressDialog == null){
+    private void showProcessDialog() {
+        if (progressDialog == null) {
             progressDialog = new ProgressDialog(getContext());
             progressDialog.setIndeterminate(true);
             progressDialog.show();
@@ -127,10 +136,10 @@ public class FragmentDangNhap extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode,resultCode,data);
-        if(requestCode == SIGN_IN_GOOGLE_PLUS){
+        callbackManager.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == SIGN_IN_GOOGLE_PLUS) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
-            if(result.isSuccess()){
+            if (result.isSuccess()) {
                 progressDialog.cancel();
                 Intent iTrangChu = new Intent(getActivity(), TrangChuActivity.class);
                 startActivity(iTrangChu);

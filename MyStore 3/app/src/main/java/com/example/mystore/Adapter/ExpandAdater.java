@@ -1,6 +1,8 @@
 package com.example.mystore.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.Point;
 import android.util.Log;
 import android.view.Display;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -18,7 +21,6 @@ import com.example.mystore.Model.TrangChu.XuLyMenu.XuLyJSONMenu;
 import com.example.mystore.R;
 import com.example.mystore.View.TrangChu.ViewXuLyMenu;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class ExpandAdater extends BaseExpandableListAdapter {
@@ -101,22 +103,29 @@ public class ExpandAdater extends BaseExpandableListAdapter {
     public View getGroupView(int viTriGroupCha, boolean isExpanded, View view, ViewGroup viewGroup) {
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewGroupCha = layoutInflater.inflate(R.layout.custom_layout_group_cha, viewGroup, false);
-
+        System.out.println(String.format("is expaned: %s, get view cha: %s ", isExpanded, viTriGroupCha));
         TextView txtTenLoaiSP = (TextView) viewGroupCha.findViewById(R.id.txtTenLoaiSP);
         txtTenLoaiSP.setText(this.loaiSanPhams.get(viTriGroupCha).getTENLOAISP());
+        if (this.loaiSanPhams.get(viTriGroupCha).getMALOAICHA() != 0) {
+            txtTenLoaiSP.setPadding(25, 2, 2, 2);
+            ImageView img = (ImageView) viewGroupCha.findViewById(R.id.imMenuPlus);
+            if (img != null) {
+                img.setVisibility(View.INVISIBLE);
+            }
+        }
         return viewGroupCha;
     }
 
     @Override
     public View getChildView(int viTriGroupCha, int viTriGroupCon, boolean isLastChild, View view, ViewGroup viewGroup) {
+
         LayoutInflater layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View viewGroupCon = layoutInflater.inflate(R.layout.custom_layout_group_con, viewGroup, false);
         ExpandableListView expandableListView = (ExpandableListView) viewGroupCon.findViewById(R.id.epMenuCon);
         SecondExpanable secondExpanable = new SecondExpanable(context);
 
-        ExpandAdater secondAdapter = new ExpandAdater(viewXuLyMenu, context,loaiSanPhams.get(viTriGroupCha).getListCon());
+        ExpandAdater secondAdapter = new ExpandAdater(viewXuLyMenu, context, loaiSanPhams.get(viTriGroupCha).getListCon());
         viewXuLyMenu.HienThiDanhSachMenuCon(secondExpanable, secondAdapter);
-//        secondExpanable.setAdapter(secondAdapter);
 
         secondExpanable.setGroupIndicator(null);
         notifyDataSetChanged();
@@ -186,7 +195,7 @@ public class ExpandAdater extends BaseExpandableListAdapter {
             View viewGroupCha = layoutInflater.inflate(R.layout.custom_layout_group_cha, viewGroup, false);
             TextView txtTenLoaiSP = (TextView) viewGroupCha.findViewById(R.id.txtTenLoaiSP);
             txtTenLoaiSP.setText(listCon.get(vitriGroupCha).getTENLOAISP());
-
+            txtTenLoaiSP.setPadding(15, 5, 5, 5);
             return viewGroupCha;
         }
 
@@ -220,10 +229,10 @@ public class ExpandAdater extends BaseExpandableListAdapter {
 
             int width = size.x;
             int height = size.y;
-            Log.d("size",width + " - " + height);
+            Log.d("size", width + " - " + height);
 
-            widthMeasureSpec = MeasureSpec.makeMeasureSpec(width,MeasureSpec.AT_MOST);
-            heightMeasureSpec = MeasureSpec.makeMeasureSpec(height,MeasureSpec.AT_MOST);
+            widthMeasureSpec = MeasureSpec.makeMeasureSpec(width, MeasureSpec.AT_MOST);
+            heightMeasureSpec = MeasureSpec.makeMeasureSpec(height, MeasureSpec.AT_MOST);
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }

@@ -10,5 +10,4 @@ public interface ViewXuLyMenu {
 
     void HienThiDanhSachMenuCon(ExpandAdater.SecondExpanable secondExpanable, ExpandAdater secondAdapter);
 
-
 }

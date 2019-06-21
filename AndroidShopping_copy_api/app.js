@@ -14,7 +14,7 @@ app.use(morgan("dev"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
-var SERVER = "http://192.168.10.7/weblazada";
+var SERVER = "http://10.10.99.159/weblazada";
 
 // default route
 app.get("/", function(req, res) {
@@ -101,10 +101,11 @@ app.get("/LaySanPhamTest", (req, res) => {
 
 app.get("/LayDanhSachDanhGiaTheoMASP", (req, res) => {
     console.log("lay san pham chi tiet: ", req.query.masp, "limit: ", req.query.limit);
-    // let { masp } = req.params;
     const { masp, limit } = req.query;
     dbConn.query(`SELECT * FROM danhgia where MASP = ${masp} ORDER BY NGAYDANHGIA DESC LIMIT ${limit}, 10 `, (error, results, fields) => {
-        if (error) throw error;
+        if (error) {
+            console.log("cannot get list danh gia");
+        }
         let row = results;
         console.log(row);
         return res.send(row);
@@ -482,11 +483,11 @@ app.post("/thanhtoan", (req, res) => {
     var formattedDate = dt.format("Y/m/d");
     let MaCK = data.MaChuyenKhoan ? data.MaChuyenKhoan : " ";
     let sql =
-        `INSERT INTO hoadon (NGAYMUA,NGAYGIAO,TRANGTHAI,TENNGUOINHAN,SODT,DIACHI,CHUYENKHOAN,MACHUYENKHOAN) VALUES ('${formattedDate}','${formattedDate}',` +
+        `INSERT INTO hoadon (NGAYMUA,NGAYGIAO,TRANGTHAI,TENNGUOINHAN,SODT,DIACHI,CHUYENKHOAN,MACHUYENKHOAN,AMOUNT) VALUES ('${formattedDate}','${formattedDate}',` +
         ` 'chờ kiếm duyệt',
-    '${data.TenNguoiNhan}', '${data.SoDT}', '${data.DiaChi}',${data.ChuyenKhoan}, '${MaCK}');`;
+    '${data.TenNguoiNhan}', '${data.SoDT}', '${data.DiaChi}',${data.ChuyenKhoan}, '${MaCK}',${data.amount});`;
     dbConn.query(sql, (error, results, fields) => {
-        if (error) throw error;
+        // if (error) throw error;
         let chitiet = data.chiTietHoaDonList;
         chitiet.forEach(item => {
             dbConn.query(
@@ -497,6 +498,34 @@ app.post("/thanhtoan", (req, res) => {
                 }
             );
         });
+    });
+});
+
+app.post("/danhgia", (req, res) => {
+    const data = JSON.parse(req.query.danhgia);
+    console.log("danh gia: ", data);
+    var dt = datetime.create();
+    var formattedDate = dt.format("Y/m/d");
+    let sql =
+        `INSERT INTO danhgia (MASP,TENTHIETBI,TIEUDE,NOIDUNG,SOSAO,NGAYDANHGIA) VALUES (` +
+        data.MASP +
+        `,'` +
+        data.TENTHIETBI +
+        `','` +
+        data.TIEUDE +
+        `','` +
+        data.NOIDUNG +
+        `',` +
+        data.SOSAO +
+        `,'` +
+        formattedDate +
+        `');`;
+    console.log("sql: ", sql);
+    dbConn.query(sql, (error, results, fields) => {
+        if (error) {
+            console.log("cannot insert danh gia: ", error);
+        }
+        return res.send("true");
     });
 });
 
