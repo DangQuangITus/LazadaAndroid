@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<instant-run
+    abi="x86"
+    api-level="26"
+    build-mode="COLD"
+    density="xhdpi"
+    format="10"
+    plugin-version="3.4.0"
+    timestamp="1561087092892"
+    token="-2394857479782538619"
+    verifier="COLD_SWAP_REQUESTED" >
+
+    <task
+        name="javac"
+        duration="0" />
+    <task
+        name="instant-run-dex"
+        duration="0" />
+    <task
+        name="instant-run-transform"
+        duration="0" />
+    <task
+        name="verifier"
+        duration="0" />
+
+    <build
+        build-mode="FULL"
+        timestamp="1561038286894"
+        verifier="FULL_BUILD_REQUESTED" >
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/instant-run-apk/debug/app-debug.apk"
+            type="SPLIT_MAIN" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="COMPATIBLE"
+        timestamp="1561052774649"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/dep/dependencies.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_2.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_1.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_5.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_3.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_4.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/instant-run-apk/debug/app-debug.apk"
+            type="SPLIT_MAIN" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="COMPATIBLE"
+        timestamp="1561053653966"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_0.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="COMPATIBLE"
+        timestamp="1561054799341"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_7.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1561085148308"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/resources/instant-run/debug/resources-debug.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        ir-eligibility="FIELD_TYPE_CHANGE"
+        timestamp="1561086657110"
+        verifier="COLD_SWAP_REQUESTED" >
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_8.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_6.apk"
+            type="SPLIT" />
+        <artifact
+            location="/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/split-apk/debug/slices/slice_9.apk"
+            type="SPLIT" />
+    </build>
+    <build
+        build-mode="COLD"
+        timestamp="1561087092892"
+        verifier="COLD_SWAP_REQUESTED" />
+
+</instant-run>

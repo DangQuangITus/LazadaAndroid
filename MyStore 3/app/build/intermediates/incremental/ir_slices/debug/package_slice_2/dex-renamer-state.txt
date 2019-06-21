@@ -1,0 +1,4 @@
+#Fri Jun 21 00:46:19 ICT 2019
+base.0=/Users/lap12548/Documents/hcmus/android/20190524/MyStore 3/app/build/intermediates/transforms/dexMerger/debug/2
+path.0=classes.dex
+renamed.0=classes.dex
